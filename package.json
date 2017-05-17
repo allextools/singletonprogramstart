@@ -1,0 +1,29 @@
+{
+  "name": "allex_singletonprogramstarttool",
+  "version": "1.0.0",
+  "description": "Typical pid-based program execution control",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allextools/singletonprogramstart.git"
+  },
+  "dependencies": {
+    "is-running": "2.x",
+    "npid": "0.4.x"
+  },
+  "keywords": [
+    "ecosystem:AllexJS",
+    "pid",
+    "singleton",
+    "program"
+  ],
+  "author": "Andrija Petrovic <andrija.hers@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allextools/singletonprogramstart/issues"
+  },
+  "homepage": "https://github.com/allextools/singletonprogramstart#readme"
+}
