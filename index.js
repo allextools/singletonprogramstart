@@ -5,7 +5,11 @@ var npid = require('npid'),
     pidfn;
 
 function nullPidFile(){
-  fs.unlink(pidfn,createPidFile);
+  try {
+    fs.unlinkSync(pidfn);
+  } catch (ignore) {
+  }
+  createPidFile();
 }
 
 function checkRunningPid(){
@@ -20,7 +24,6 @@ function checkRunningPid(){
         nullPidFile();
       }
     }
-    console.log(pid);
   }
   catch(e){
     process.exit(1);
