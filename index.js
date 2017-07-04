@@ -4,17 +4,6 @@ var npid = require('npid'),
     path = require('path'),
     pidfn;
 
-function runningChecker(err,live){
-  if(err){
-    process.exit(2);
-  }
-  if(live){
-    process.exit(1);
-  }else{
-    nullPidFile();
-  }
-}
-
 function nullPidFile(){
   fs.unlink(pidfn,createPidFile);
 }
@@ -25,7 +14,11 @@ function checkRunningPid(){
     if(isNaN(pid)){
       nullPidFile();
     }else{
-      isrunning(pid,runningChecker);
+      if (isrunning(pid)) {
+        process.exit(1);
+      } else {
+        nullPidFile();
+      }
     }
     console.log(pid);
   }

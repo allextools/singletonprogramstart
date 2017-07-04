@@ -1,6 +1,6 @@
 {
   "name": "allex_singletonprogramstarttool",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Typical pid-based program execution control",
   "main": "index.js",
   "scripts": {
