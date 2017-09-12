@@ -12,37 +12,53 @@ function nullPidFile(){
   createPidFile();
 }
 
-function checkRunningPid(){
+function abort () {
+  process.exit(1);
+}
+
+function checkRunningPid(cb){
   try{
-    var pid = parseInt(fs.readFileSync(pidfn).toString());
+    var pid = parseInt(fs.readFileSync(pidfn).toString()), cbr;
     if(isNaN(pid)){
       nullPidFile();
     }else{
       if (isrunning(pid)) {
-        process.exit(1);
+        if (cb) {
+          cbr = cb(pid, pidfn);
+          if (cbr && ('function' === typeof cbr.then)) {
+            cbr.then(
+              createPidFile,
+              abort
+            );
+            return;
+          }
+          createPidFile();
+        } else {
+          abort();
+        }
       } else {
         nullPidFile();
       }
     }
   }
   catch(e){
-    process.exit(1);
+    abort();
   }
 }
 
-function createPidFile(){
+function createPidFile(cb){
   try {
     var pidf = npid.create(pidfn);
     pidf.removeOnExit();
   }
   catch(e){
-    checkRunningPid();
+    checkRunningPid(cb);
   }
 }
 
-function startPidControlledProgram(programname,cwd){
+function startPidControlledProgram(programname,cwd,cb){
   pidfn = path.join((cwd||__dirname),(programname||'pidcontrol')+'.pid');
-  createPidFile();
+  createPidFile(cb);
 };
 
 module.exports = startPidControlledProgram;
